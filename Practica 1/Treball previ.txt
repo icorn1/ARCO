@@ -1,0 +1,73 @@
+1)
+
+int compara(int A, int B){
+	int valor = 0;
+	if(A > B)
+		valor = A-B;
+	else if(A < B)
+		valor = A;
+	
+	return valor;
+}
+
+main() {
+	int A, B, modulo, mayor;
+	A=10;  // estos valores los podréis cambiar
+	B=6; // estos valores los podréis cambiar
+	modulo=A;
+	do{
+		modulo=compara(modulo,B);
+	}while (B≤modulo)
+}  
+
+2)
+
+	.text
+	.align 2
+	.globl main
+main:
+	addi 	$s0, $zero, 10
+	addi 	$s1, $zero, 6
+	add	$s2, $s0, $zero
+loop:  
+	move	$a0, $s1
+	move	$a1, $s2
+	addi	$sp, $sp, -4
+	sw	$ra, $sp(0)
+	jal	compara
+	lw	$ra, $sp(0)
+	addi	$sp, $sp, 4
+	move 	$s2, $v0
+	ble	$s1, $s2, exit
+	j	loop
+exit:	
+	jr 	$ra
+	.data
+	.align 0
+	
+
+3. 
+main:
+	addi	$a0, $zero, 1
+	addi	$sp, $sp, -4
+	sw	$ra, $sp(0)
+	jal	leaf_function
+	lw 	$ra, $sp(0)
+	addi	$sp, $sp, 4
+	jr	$ra
+	
+leaf_function:
+	addi	$t0, $a0, 1
+	addi	$t1, $zero, 5
+	bgt	$a0, $t1, exit
+	move	$v0, $t0 
+	jr	$ra
+exit:	addi	$a0, $t0, 0
+	addi	$sp, $sp, -4
+	sw	$ra, $sp(0)
+	jal	leaf_function
+	lw 	$ra, $sp(0)
+	addi	$sp, $sp, 4
+	jr	$ra
+	.data
+	.align 0

@@ -1,0 +1,24 @@
+main:
+	addi	$a0, $zero, 1
+	addi	$sp, $sp, -4
+	sw	$ra, $sp(0)
+	jal	leaf_function
+	lw 	$ra, $sp(0)
+	addi	$sp, $sp, 4
+	jr	$ra
+	
+leaf_function:
+	addi	$t0, $a0, 1
+	addi	$t1, $zero, 5
+	bgt	$a0, $t1, exit
+	move	$v0, $t0 
+	jr	$ra
+exit:	addi	$a0, $t0, 0
+	addi	$sp, $sp, -4
+	sw	$ra, $sp(0)
+	jal	leaf_function
+	lw 	$ra, $sp(0)
+	addi	$sp, $sp, 4
+	jr	$ra
+	.data
+	.align 0
